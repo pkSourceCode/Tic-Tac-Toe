@@ -1,0 +1,611 @@
+@font-face {
+    font-family: myFont1;
+    src: url("../fonts/varela/VarelaRound-Regular.ttf");
+}
+
+@font-face {
+    font-family: myFont2;
+    src: url("../fonts/lobster/Lobster-Regular.ttf");
+}
+
+@font-face {
+    font-family: myFont3;
+    src: url("../fonts/lexend/LexendZetta-Regular.ttf");
+}
+
+@font-face {
+    font-family: myFont4;
+    src: url("../fonts/alfa/AlfaSlabOne-Regular.ttf");
+}
+
+@font-face {
+    font-family: myFont5;
+    src: url("../fonts/russo/RussoOne-Regular.ttf");
+}
+
+@font-face {
+    font-family: myFont6;
+    src: url("../fonts/anton/Anton-Regular.ttf");
+}
+
+html
+{
+    font-family: myFont1, sans-serif;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+body
+{
+    min-width: 600px;
+    min-height: 800px;
+    overflow: hidden;
+}
+
+#wrapper
+{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width:500px;
+    height:900px;
+    display: flex;
+    align-items: center;
+    /*justify-content: center;*/
+    flex-direction: column;
+}
+
+#game_board_wrapper
+{
+    position: relative;
+    height:58%;
+    width:100%;
+    overflow: hidden;
+}
+
+#game_control
+{
+    height:4%;
+    min-height: 40px;
+    width:100%;
+    position: relative;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game_control div
+{
+    width:100%;
+    height:calc(100%);
+    color:white;
+    font-size: 1.2em;
+    font-weight:bolder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+#game_control div.outer button
+{
+    top:calc(50% + 1px);
+    left:50%;
+    width:85%;
+    height:85%;
+    font-weight: bolder;
+    padding:0;
+    margin:0;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    cursor: pointer;
+}
+
+#game_control div.curtain
+{
+    position: relative;
+    height:100%;
+    transition: width 0.5s ease-in-out;
+    background-color: grey;
+    z-index: 5;
+}
+
+#game_control div.curtain.curtain_on
+{
+    width:100%;
+}
+
+#game_control div.curtain.curtain_off
+{
+    width:0;
+}
+
+#alert_panel
+{
+    float:left;
+    position: absolute;
+    left:0;
+    width:100%;
+    height: 100%;
+    transition: top 1s ease-in-out, z-index 0.5s ease-in-out;
+    background-color: rgba(86, 85, 85, 0.75);
+    z-index: 99;
+}
+
+#game_panel
+{
+    position:relative;
+    width:100%;
+    overflow: hidden;
+    transition: height 1s ease-in-out;
+}
+
+#alert_box
+{
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    position:absolute;
+    border: 1px solid black;
+    background-color: rgba(64, 61, 61, 0.5);
+    width:80%;
+    height:40%;
+}
+
+#alert_box_top
+{
+    width:100%;
+    height:30%;
+    position:relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkgrey;
+    font-size: 2em;
+    font-weight: bolder;
+    text-shadow: 1px 1px 10px white;
+}
+
+#alert_box_mid
+{
+    width:100%;
+    height:50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 1px 1px 10px white;
+    background-color: lightgray;
+}
+
+#alert_box_bot
+{
+    background-color: darkgrey;
+    width:100%;
+    height:20%;
+    position:relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#alert_box_bot button
+{
+    height:90%;
+    width:100%;
+    font-weight: bolder;
+    font-size: 1.2em;
+    padding-top:5px;
+}
+
+#alert_box_bot div
+{
+    position:relative;
+    width:100%;
+    height:100%;
+}
+
+#alert_box_bot text
+{
+    height:100%;
+    width:50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: font-size 0.5s ease-in-out;
+}
+
+.expand
+{
+    font-size: 0.85em;
+}
+
+.contract
+{
+    font-size: 1.5em;
+}
+
+#game_board
+{
+    border-collapse: collapse;
+    height:100%;
+    width:100%;
+    border: 3px solid black;
+    cursor: pointer;
+    table-layout: fixed;
+    overflow: hidden;
+    transition: background-color 0.5s ease-in-out;
+}
+
+#game_board th:hover
+{
+    background-color: darkseagreen;
+}
+
+#game_board th
+{
+    border: 2px solid black;
+    transition: background-color 0.25s ease;
+    overflow: hidden;
+}
+
+/* Set box width & height to 33.33% just only for Tic-Tac-Toe Game */
+#game_board tr th
+{
+    max-width:33.33%;
+    max-height:33.33%;
+    padding:0;
+    margin:0;
+    position:relative;
+}
+
+#game_board tr th div
+{
+    margin: auto;
+    padding:0;
+    font-size: 6em;
+    position: relative;
+    overflow: hidden;
+    max-height:80%;
+    max-width:80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    transition: transform 0.3s ease-in-out, background-color 0.2s ease-in-out;
+    z-index: 5;
+    border: 1px solid black;
+    font-weight: bolder;
+    font-family: myFont5, fantasy;
+}
+
+
+#game_board text
+{
+    transition: opacity 0.5s ease-in-out, text-shadow 0.2s ease-in-out;
+}
+
+.cell-hover
+{
+    transform: scale(1.2, 1.2);
+}
+
+#your_matches
+{
+    width:100%;
+    height:16px;
+    border-collapse: collapse;
+    border:0;
+}
+
+#your_matches tr th
+{
+    white-space: nowrap;
+}
+
+#your_matches tr th:nth-child(1), th:nth-child(5)
+{
+    width:20%;
+}
+
+#your_matches tr th input[type="text"]
+{
+    width:100%;
+    text-align:center;
+    font-weight: bold;
+}
+
+#your_matches tr th:nth-child(2),
+#your_matches tr th:nth-child(3),
+#your_matches tr th:nth-child(4)
+{
+    width:20%;
+    font-size: 0.8em;
+    vertical-align: bottom;
+}
+
+#matches
+{
+    height:20%;
+    width:100%;
+    margin-bottom:5%;
+    position: relative;
+}
+
+#matches div, #players div
+{
+    width:100%;
+    height:calc(100% - 38px);
+    position:relative;
+    overflow-y: auto;
+    background-color: azure;
+}
+
+#players
+{
+    height:20%;
+    width:100%;
+}
+
+#your_info
+{
+    width:100%;
+    height:16px;
+    border-collapse: collapse;
+    border:0;
+}
+
+#your_info tr th
+{
+    white-space: nowrap;
+}
+
+#your_info tr th:nth-child(1), #your_info tr th:nth-child(5)
+{
+    width:20%;
+}
+
+#your_info tr th input[type="text"]
+{
+    width:100%;
+    text-align:center;
+    font-weight: bold;
+}
+
+#your_info tr th button
+{
+    font-weight: bolder;
+    width:100%;
+    height:100%;
+    margin:0;
+    padding:0;
+    cursor: pointer;
+}
+
+#your_info tr th button:hover
+{
+    background-color: darkgrey;
+}
+
+#your_info tr th button:active
+{
+    background-color: lightgray;
+}
+
+#your_info tr th:nth-child(2),
+#your_info tr th:nth-child(3),
+#your_info tr th:nth-child(4)
+{
+    width:20%;
+    font-size: 0.8em;
+    vertical-align: middle;
+}
+
+.data_table
+{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.data_table tr th
+{
+    font-weight: normal;
+    font-size: 0.8em;
+    height:20px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.data_table tr:hover
+{
+    font-weight: normal;
+    background-color: lightgray;
+}
+
+.data_table tr th:nth-child(1),
+.data_table tr th:nth-child(5)
+{
+    width:20%;
+}
+
+.data_table tr th:nth-child(2),
+.data_table tr th:nth-child(3),
+.data_table tr th:nth-child(4)
+{
+    width:20%;
+}
+
+.data_table tr th button
+{
+    width:100%;
+    height: 100%;
+}
+
+#challenge_player
+{
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    padding-left:0;
+    padding-right:0;
+}
+
+.close
+{
+    top: 110%;
+    z-index: 0;
+}
+
+.open
+{
+    top: 0;
+    z-index: 99;
+}
+
+.show
+{
+    opacity: 1;
+}
+
+.hide
+{
+    opacity: 0;
+}
+
+.red
+{
+    background-color: lightcoral;
+}
+
+.azure
+{
+    background-color: azure;
+}
+
+.pink
+{
+    background-color: rgb(233, 160, 181);
+}
+
+.green
+{
+    background-color: rgb(120, 221, 146);
+}
+
+.blue
+{
+    background-color: rgb(120, 133, 221);
+}
+
+.yellow
+{
+    background-color: rgb(214, 221, 120);
+}
+
+.purple
+{
+    background-color: rgb(171, 120, 221);
+}
+
+.orange
+{
+    background-color: rgb(221, 160, 120);
+}
+
+.white
+{
+    background-color: ghostwhite;
+}
+
+.whitesmoke
+{
+    background-color: whitesmoke;
+}
+
+.gray
+{
+    background-color: gray;
+}
+
+.lightgray
+{
+    background-color: lightgray;
+}
+
+.player_online text:before
+{
+    color: mediumspringgreen;
+    text-shadow: 1px 1px 1px black;
+    vertical-align: top;
+    content: " ONLINE  👀️";
+    text-align: center;
+}
+
+.player_busy text:before
+{
+    color: yellow;
+    text-shadow: 1px 1px 1px black;
+    vertical-align: top;
+    content: " BUSY ⏳️";
+}
+
+.player_away text:before
+{
+    color: lightcoral;
+    text-shadow: 1px 1px 1px black;
+    vertical-align: top;
+    content: " AWAY 🏃 ";
+}
+
+.player_playing button
+{
+    color:white;
+    background-color: #5b5454;
+}
+
+.player_playing button text:before
+{
+    color: white;
+    text-shadow: 1px 1px 2px darkgray;
+    vertical-align: top;
+    content: " PLAYING ⚔️";
+    cursor: not-allowed;
+}
+
+.class_font_1
+{
+
+}
+
+.class_font_2
+{
+
+}
+
+.class_font_3
+{
+
+}
+
+.class_font_4
+{
+
+}
+
+.class_font_5
+{
+
+}
+
+.class_font_6
+{
+
+}
